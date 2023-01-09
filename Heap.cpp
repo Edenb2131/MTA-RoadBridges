@@ -5,35 +5,41 @@
 #include "Heap.h"
 using namespace std;
 
+
 Heap::Heap(int maxSize) {
-    _data = new Pair[maxSize];
+    _data = new Pair*[maxSize];
     _maxSize = maxSize;
     _heapSize = 0;
     _allocated = 1;
 }
 
-Heap::Heap(Pair A[], int size) {
-    _data = A;
-    _maxSize = size;
-    _heapSize = size;
-    _allocated = 0; // The heap is not allocated
-    
-    for (int i = (size / 2) - 1 ; i >= 0; i--) {
-        FixHeap(i);
-    }
-}
+//Heap::Heap(Pair A[], int size) {
+//    _data = A; /////// check
+//    _maxSize = size;
+//    _heapSize = size;
+//    _allocated = 0; // The heap is not allocated
+//
+//    for (int i = (size / 2) - 1 ; i >= 0; i--) {
+//        FixHeap(i);
+//    }
+//}
 
 Heap::~Heap() {
-    if (_allocated) {
-        delete[] _data;
-    }
-    _data = nullptr;
+//    if (_allocated) {
+//        for(int i = 0; i < _heapSize; i++) {
+//            if(_data[i] != nullptr) {
+//                delete _data[i];
+//            }
+//        }
+//        delete[] _data;
+//    }
+//    _data = nullptr;
 }
 
 // private functions of Heap class
 
 int Heap::left(int node) {
-    return (2 * node + 1);
+    return 2 * node + 1;
 }
 
 int Heap::right(int node) {
@@ -45,80 +51,134 @@ int Heap::parent(int node) {
 }
 
 
-void Heap::FixHeap(int node) {
-    int max;
-    int left = Heap::left(node);
-    int right = Heap::right(node);
-    
-    if (left < _heapSize && _data[left].key > _data[node].key) {
-        max = left;
-    }
-    else {
-        max = node;
-    }
-    
-    if (right < _heapSize && _data[right].key > _data[max].key) {
-        max = right;
-    }
-    if (max != node) {
-        // Swap values if necessary and fix heap
-        Pair temp = _data[node];
-        _data[node] = _data[max];
-        _data[max] = temp;
-        
-        FixHeap(max);
-    }
-}
-
 // public functions of Heap class
 
-void Heap::Insert(Pair pair) {
+void Heap::Insert(Pair* a) {
     if (_heapSize == _maxSize) {
-        cout << "Heap is full" << endl;
-        // throw ??? ////////////////////////////////////////////
-        return;
+        _maxSize*=2;
     }
-    
-    int node = _heapSize;
+    _data[_heapSize] = a;
     _heapSize++;
     
-    while (node > 0 && _data[parent(node)].key > _data[node].key) {
-        _data[node] = _data[parent(node)];
-        node = parent(node);
-    }
-    _data[node] = pair;
+    FixHeap(a);
+    
 }
 
-Pair Heap::DeleteMax() {
-    if (_heapSize == 0) {
-        cout << "Heap is empty" << endl;
-        // throw ??? ////////////////////////////////////////////
-        return {0, 0};
-    }
-    
-    Pair max = _data[0];
-    _data[0] = _data[_heapSize - 1];
-    _heapSize--;
-    FixHeap(0);
-    
-    return max;
-}
 
 void Heap::Print() {
     for (int i = 0; i < _heapSize; i++) {
-        cout << _data[i].key << " ";
+        cout << _data[i]->_height << " ";
     }
     cout << endl;
 }
 
 
-void Heap::HeapSort(Pair A[], int size) {
-   Heap H(A, size);
-   Pair item;
-   
-   for (int i = size - 1; i >= 0; i--) {
-         item = H.DeleteMax();
-         A[i] = item;
-   }
+// Fix heap for max heap
+void Heap::FixHeap(Pair* node) {
+
+
+//
+//    // Fix the heap starting at the new pair's parent
+//    int current = getPairPos(node) ;
+//    while (current >= 0) {
+//        // Get the left and right children of the current node
+//        int left = 2 * current + 1;
+//        int right = 2 * current + 2;
+//
+//        // Find the largest of the three values (current node, left child, right child)
+//        int largest = current;
+//        if (left > _heapSize && _data[left]->_height > _data[largest]->_height) {
+//            largest = left;
+//        }
+//        if (right > _heapSize && _data[right]->_height > _data[largest]->_height) {
+//            largest = right;
+//        }
+//
+//        // If the largest value is not the current node, swap the values and continue
+//        if (largest != current) {
+//            Pair* temp = _data[current];
+//            _data[current] = _data[largest];
+//            _data[largest] = temp;
+//            current = largest;
+//        } else {
+//            break;
+//        }
+//    }
+
+
+
+
+//
+//    int max;
+//    int current = getPairPos(node) ;
+//    int left = 2 * current + 1;
+//    int right = 2 * current + 2;
+//
+//    if(left < _heapSize && _data[left]->_height > _data[current]->_height){
+//        max = left;
+//    } else {
+//        max = current;
+//    }
+//    if(right < _heapSize && _data[right]->_height > _data[max]->_height){
+//        max = right;
+//    }
+//
+//    if(max != current){
+//        Pair* temp = _data[current];
+//        _data[current]->_height = _data[max]->_height;
+//        _data[current]->_road = _data[max]->_road;
+//
+//        _data[max]->_height = temp->_height;
+//        _data[max]->_road = temp->_road;
+//
+//
+//        FixHeap(_data[max]);
+//    }
+
+
+
+
+
+    
+//    int i = getPairPos(node);
+//    int l = left(i);
+//    int r = right(i);
+//    int max = i;
+//
+//    if (l < _heapSize && (_data[l]->getMinBridge() == HAVE_NO_BRIDGES || _data[l]->getMinBridge() > _data[i]->getMinBridge() )) { // if the left child is bigger than the parent
+//        max = l;
+//    }
+//    if (r < _heapSize && ( _data[r]->getMinBridge() > _data[max]->getMinBridge() ||  _data[r]->getMinBridge() == HAVE_NO_BRIDGES)) { // if the right child is bigger than the parent
+//        max = r;
+//    }
+//    if (max != i) { // if the parent is not the biggest
+//        Pair *temp = _data[i];
+//        int temp_heap_place = getPairPos(_data[i]);
+//        int temp_heap_place2 = getPairPos(_data[max]);
+//        _data[i] = _data[max];
+//        _data[i]->getRoad()->setHeapPlace(temp_heap_place);
+//        _data[max] = temp;
+//        _data[max]->getRoad()->setHeapPlace(temp_heap_place2);
+//
+//
+//        FixHeap(max);
+//    }
+//
+//
+    
 }
+
+Pair* Heap::getData(int i) {
+    return _data[i];
+}
+
+int Heap::getPairPos(Pair *p) {
+    for (int i = 0; i < _heapSize; i++) {
+        if (_data[i] == p) {
+            return i;
+        }
+    }
+    return -1;
+}
+
 
