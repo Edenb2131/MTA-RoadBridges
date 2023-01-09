@@ -58,9 +58,15 @@ void Heap::Insert(Pair* a) {
         _maxSize*=2;
     }
     _data[_heapSize] = a;
-    _heapSize++;
     
-    FixHeap(a);
+    int i = _heapSize;
+    while (i > 0 && _data[parent(i)]->_height < _data[i]->_height) {
+        Pair* temp = _data[i];
+        _data[i] = _data[parent(i)];
+        _data[parent(i)] = temp;
+        i = parent(i);
+    }
+    _heapSize++;
     
 }
 
@@ -75,9 +81,8 @@ void Heap::Print() {
 
 // Fix heap for max heap
 void Heap::FixHeap(Pair* node) {
+    // Add the new pair to the end of the array happens before
 
-
-//
 //    // Fix the heap starting at the new pair's parent
 //    int current = getPairPos(node) ;
 //    while (current >= 0) {
@@ -108,32 +113,32 @@ void Heap::FixHeap(Pair* node) {
 
 
 
-//
-//    int max;
-//    int current = getPairPos(node) ;
-//    int left = 2 * current + 1;
-//    int right = 2 * current + 2;
-//
-//    if(left < _heapSize && _data[left]->_height > _data[current]->_height){
-//        max = left;
-//    } else {
-//        max = current;
-//    }
-//    if(right < _heapSize && _data[right]->_height > _data[max]->_height){
-//        max = right;
-//    }
-//
-//    if(max != current){
-//        Pair* temp = _data[current];
-//        _data[current]->_height = _data[max]->_height;
-//        _data[current]->_road = _data[max]->_road;
-//
-//        _data[max]->_height = temp->_height;
-//        _data[max]->_road = temp->_road;
-//
-//
-//        FixHeap(_data[max]);
-//    }
+
+    int max;
+    int current = getPairPos(node) ;
+    int left = 2 * current + 1;
+    int right = 2 * current + 2;
+
+    if(left < _heapSize && _data[left]->_height > _data[current]->_height){
+        max = left;
+    } else {
+        max = current;
+    }
+    if(right < _heapSize && _data[right]->_height > _data[max]->_height){
+        max = right;
+    }
+
+    if(max != current){
+        Pair* temp = _data[current];
+        _data[current]->_height = _data[max]->_height;
+        _data[current]->_road = _data[max]->_road;
+
+        _data[max]->_height = temp->_height;
+        _data[max]->_road = temp->_road;
+
+
+        FixHeap(_data[max]);
+    }
 
 
 
