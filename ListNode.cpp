@@ -9,7 +9,7 @@ ListNode::ListNode() {
     _pair->_height = 0;
     _pair->_road = 0;
     _next = nullptr;
-    
+
 }
 
 ListNode::ListNode(Pair* h) {
@@ -17,9 +17,7 @@ ListNode::ListNode(Pair* h) {
     _next = nullptr;
 }
 
-ListNode::~ListNode() {
 
-}
 
 float ListNode::getHeight() {
     return _pair->_height;
@@ -41,15 +39,14 @@ Pair* ListNode::getPair() {
     return _pair;
 }
 
-ListNode* ListNode::createNewListNode(Pair p, ListNode *next) {
-    
+ListNode* ListNode::createNewListNode(Pair p, ListNode* next) {
+
     ListNode* newNode = new ListNode();
     newNode->_pair = new Pair(p._height, p._road);
     newNode->_next = next;
     return newNode;
-    
-}
 
+}
 
 
 

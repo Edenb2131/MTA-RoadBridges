@@ -9,23 +9,24 @@
 #include "Heap.h"
 #include "List.h"
 
+
 class Roads {
     List* _roads;
     int _size;
     Heap _heap;
-    
-    
+
+
 public:
 
     Roads(int size);
-    ~Roads();
+   // ~Roads();
     void init();
     void print();
     void addBridge(float h, int r);
     void whichRoad(float h);
     void print(int r);
-    
-    
+
+
 };
 
 

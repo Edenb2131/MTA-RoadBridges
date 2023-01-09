@@ -12,19 +12,19 @@ class ListNode {
 
     Pair* _pair;
     ListNode* _next;
-    
+
 public:
-    
+
     ListNode();
     ListNode(Pair* h);
-    ~ListNode();
+    //~ListNode();
     float getHeight();
     ListNode* getNext();
     Pair* getPair();
     void setPair(Pair* p);
     void setNext(ListNode* next);
-    ListNode* createNewListNode(Pair p , ListNode* next);
-    
+    ListNode* createNewListNode(Pair p, ListNode* next);
+
 };
 
 
