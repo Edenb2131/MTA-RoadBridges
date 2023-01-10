@@ -9,6 +9,7 @@
 #include "Heap.h"
 #include "List.h"
 
+#define HAVE_NO_BRIDGES 10000
 
 class Roads {
     List* _roads;
@@ -19,7 +20,7 @@ class Roads {
 public:
 
     Roads(int size);
-   // ~Roads();
+    ~Roads();
     void init();
     void print();
     void addBridge(float h, int r);

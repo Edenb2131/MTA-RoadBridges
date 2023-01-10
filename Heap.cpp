@@ -7,34 +7,18 @@ using namespace std;
 
 
 Heap::Heap(int maxSize) {
-    _data = new Pair* [maxSize];
+    _data = new Pair*[maxSize];
     _maxSize = maxSize;
     _heapSize = 0;
     _allocated = 1;
 }
 
-//Heap::Heap(Pair A[], int size) {
-//    _data = A; /////// check
-//    _maxSize = size;
-//    _heapSize = size;
-//    _allocated = 0; // The heap is not allocated
-//
-//    for (int i = (size / 2) - 1 ; i >= 0; i--) {
-//        FixHeap(i);
-//    }
-//}
 
-//Heap::~Heap() {
-    //    if (_allocated) {
-    //        for(int i = 0; i < _heapSize; i++) {
-    //            if(_data[i] != nullptr) {
-    //                delete _data[i];
-    //            }
-    //        }
-    //        delete[] _data;
-    //    }
-    //    _data = nullptr;
-//}
+Heap::~Heap() {
+    if (_allocated) {
+        delete[] _data;
+    }
+}
 
 // private functions of Heap class
 
@@ -56,18 +40,20 @@ int Heap::parent(int node) {
 void Heap::Insert(Pair* item) {
     if (_heapSize == _maxSize) {
         _maxSize *= 2;
+        cout << "Heap is full" << endl;
+//        throw "Heap is full !";
     }
     int i = _heapSize;
     _heapSize++;
-
+    
     while (i > 0 && _data[parent(i)]->_height < item->_height) {
         _data[i] = _data[parent(i)];
-        _data[i]->index = i;
+        _data[i]->_index = i;
         i = parent(i);
     }
     _data[i] = item;
-    _data[i]->index = i;
-
+    _data[i]->_index = i;
+    
 }
 
 
@@ -81,7 +67,6 @@ void Heap::Print() {
 
 // Fix heap for max heap
 void Heap::FixHeap(int node) {
-
     int max;
     int Left = left(node);
     int Right = right(node);
@@ -98,18 +83,21 @@ void Heap::FixHeap(int node) {
 
     if (max != node) {
         swap(_data[node], _data[max]);
+        int temp = _data[node]->_index;
+        _data[node]->_index = _data[max]->_index;
+        _data[max]->_index = temp;
         FixHeap(max);
     }
 
-
-
+    
+    
 }
 
 Pair* Heap::getData(int i) {
     return _data[i];
 }
 
-int Heap::getPairPos(Pair* p) {
+int Heap::getPairPos(Pair *p) {
     for (int i = 0; i < _heapSize; i++) {
         if (_data[i] == p) {
             return i;
@@ -117,4 +105,5 @@ int Heap::getPairPos(Pair* p) {
     }
     return -1;
 }
+
 

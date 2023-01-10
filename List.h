@@ -14,7 +14,7 @@ class List {
 public:
     bool IsEmpty = true;
     List();
-    //~List();
+    ~List();
     void init();
     void add(float h, int r, bool& neededToFixHeap);
     void print();

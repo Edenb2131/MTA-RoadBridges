@@ -10,17 +10,17 @@ List::List() {
     init();
 }
 
-//List::~List() {
-//    ListNode* curr = _head;
-//    while (curr != nullptr) {
-//        ListNode* temp = curr;
-//        curr = curr->getNext();
-//        delete temp;
-//    }
-//    _head = nullptr;
-//    _tail = nullptr;
-//    delete _min;
-//}
+List::~List() {
+    while (_head != nullptr) {
+        ListNode* next = _head->getNext();
+        delete _head;
+        _head = next;
+    }
+    _tail = nullptr;
+    delete _min;
+    _min = nullptr;
+}
+
 
 void List::init() {
     _head = nullptr;
@@ -31,22 +31,28 @@ void List::init() {
 }
 
 void List::add(float h, int r, bool& neededToFixHeap) {
+    if(_min->getPair()->_index == -1){
+        neededToFixHeap = true;
+    }
+    
     Pair* p = new Pair(h, r);
+    p->_index = -1; // This will never be min. Min is a pointer to the min in the heap and have an index.
     insertToEndList(this, p);
 
-    if (h < _min->getHeight()) {
+    if (h <= _min->getHeight()) {
         _min->setPair(_tail->getPair());
         neededToFixHeap = true;
     }
-
     _size++;
 }
 
 void List::print() {
     ListNode* node = _head;
     while (node != nullptr) {
-        cout << std::fixed << std::setprecision(4) <<node->getHeight() << "  ";
+        cout << std::fixed << std::setprecision(4) <<node->getHeight() ;
         node = node->getNext();
+        if(node != nullptr)
+            cout << ", ";
     }
     cout << endl;
 }
@@ -67,6 +73,7 @@ void List::insertNodeToEndList(List* pList, ListNode* pNode) {
     if (pList->_head == nullptr) {
         pList->_head = pNode;
         pList->_tail = pNode;
+        
         pList->_min->setPair(pNode->getPair());
     }
     else {

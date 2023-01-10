@@ -16,8 +16,8 @@ class ListNode {
 public:
 
     ListNode();
-    ListNode(Pair* h);
-    //~ListNode();
+    ListNode(float h, int r);
+    ~ListNode();
     float getHeight();
     ListNode* getNext();
     Pair* getPair();

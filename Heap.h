@@ -6,15 +6,15 @@
 #define MTA_ROADBRIDGES_HEAP_H
 
 #include <iostream>
-#define HAVE_NO_BRIDGES -1
+#define HAVE_NO_BRIDGES 10000
 
 struct Pair {
-    float _height;
-    int _road;
-    int index = -1;
+    float _height = HAVE_NO_BRIDGES;
+    int _road = -1;
+    int _index = -1;
 
     Pair() {
-        _height = 0;
+        _height = HAVE_NO_BRIDGES;
         _road = 0;
     }
 
@@ -43,13 +43,14 @@ public:
     void FixHeap(int node);
     Pair* getData(int i);
     Heap(int maxSize); // allocate memory
-    //~Heap();
+    ~Heap();
     void Insert(Pair* item);
     void Print();
+    int getPairPos(Pair* p);
     int getSize() const {
         return _heapSize;
     }
-    int getPairPos(Pair* p);
+
 };
 
 

@@ -10,17 +10,17 @@ void getDataFromUser(int& sizeOfRoads, Roads& roads) {
     int actions, road;
     char c;
     float h;
-    cout << "Please enter the number of Actions: " << endl;
+//    cout << "Please enter the number of Actions: " << endl;
     cin >> actions;
 
-    cout << "Enter the First action: " << endl;
+//    cout << "Enter the First action: " << endl;
     cin >> c;
     if (c != 'A' && c != 'a')
         throw "invalid input";
     if (c == 'A' || c == 'a') {
         roads.init();
     }
-
+    
     for (int i = 1; i < actions; i++) {
         cin >> c;
 
@@ -53,7 +53,7 @@ void getDataFromUser(int& sizeOfRoads, Roads& roads) {
 
 int main() {
     int sizeOfRoads;
-    cout << "Enter number of roads: " << endl;
+//    cout << "Enter number of roads: " << endl;
     cin >> sizeOfRoads;
 
     if (sizeOfRoads < 0) {
